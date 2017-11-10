@@ -1,22 +1,16 @@
 package game.managers;
 
 import communication.ChatServerThread;
+import game.pojo.Player;
 
 public class PlayerManager {
-	private ChatServerThread playerulSocket;
+	private Player playerul;
 
 	public PlayerManager(ChatServerThread playerulSocket) {
 		super();
-		this.playerulSocket = playerulSocket;
+		this.playerul = new Player(playerulSocket.getClientName(), playerulSocket);
 	}
 
-	public ChatServerThread getPlayerulSocket() {
-		return playerulSocket;
-	}
 
-	public void setPlayerulSocket(ChatServerThread playerulSocket) {
-		this.playerulSocket = playerulSocket;
-	}
-	
 	
 }

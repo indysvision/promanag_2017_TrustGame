@@ -1,13 +1,17 @@
 package game.pojo;
 
+import communication.ChatServerThread;
+
 public class Player {
 	private String name;
 	private int score;
+	private ChatServerThread socketul;
 
-	public Player(String name) {
+	public Player(String name, ChatServerThread socketul) {
 		super();
 		this.name = name;
 		this.score = 0;
+		this.socketul = socketul;
 	}
 
 	public String getName() {

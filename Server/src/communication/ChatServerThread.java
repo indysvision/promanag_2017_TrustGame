@@ -10,6 +10,14 @@ public class ChatServerThread extends Thread {
 	private DataInputStream streamIn = null;
 	private DataOutputStream streamOut = null;
 	private String clientName;
+	
+	public String getClientName() {
+		return clientName;
+	}
+
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
+	}
 
 	public ChatServerThread(ChatServer _server, Socket _socket) {
 		super();
