@@ -6,7 +6,7 @@ import java.io.*;
 public class ChatServer implements Runnable {
 	public static final int MAX_CLIENTS = 50;
 	public static final String BYE_MESSAGE = ".bye";
-	
+	public static final String NAMECHANGE_MESSAGE = ".changeName";
 	private ChatServerThread clients[] = new ChatServerThread[MAX_CLIENTS];
 	private ServerSocket server = null;
 	private Thread thread = null;
@@ -57,12 +57,21 @@ public class ChatServer implements Runnable {
 	}
 
 	public synchronized void handle(int ID, String input) {
+		if (input.equals(NAMECHANGE_MESSAGE)) {
+			clients[findClient(ID)].setUserName(input.split(" ")[1]);
+			
+		}
+		
 		if (input.equals(BYE_MESSAGE)) {
 			clients[findClient(ID)].send(BYE_MESSAGE);
 			remove(ID);
 		} else
-			for (int i = 0; i < clientCount; i++)
-				clients[i].send(ID + ": " + input);
+		for (int i = 0; i < clientCount; i++)
+			{	if(clients[i].getName()!=null)
+				{clients[i].send(clients[findClient(ID)].getName() + ": " + input);}	
+				else {clients[i].send(ID + ": " + input);}
+			}
+				
 	}
 
 	public synchronized void remove(int ID) {

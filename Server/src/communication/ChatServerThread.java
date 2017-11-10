@@ -7,8 +7,20 @@ public class ChatServerThread extends Thread {
 	private ChatServer server = null;
 	private Socket socket = null;
 	private int ID = -1;
+	private String userName;
 	private DataInputStream streamIn = null;
 	private DataOutputStream streamOut = null;
+
+	
+	
+	
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	public ChatServerThread(ChatServer _server, Socket _socket) {
 		super();
