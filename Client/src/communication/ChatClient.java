@@ -42,7 +42,6 @@ public class ChatClient implements Runnable {
 				streamOut.writeUTF( userInput.equals(BYE_MESSAGE) ?
 						BYE_MESSAGE : clientName + ": " + userInput);
 
-				streamOut.writeUTF( clientName + ": " + userInput);
 				streamOut.flush();
 			} catch (IOException ioe) {
 				System.out.println("Sending error: " + ioe.getMessage());
