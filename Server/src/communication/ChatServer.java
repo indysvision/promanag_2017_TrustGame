@@ -4,7 +4,10 @@ import java.net.*;
 import java.io.*;
 
 public class ChatServer implements Runnable {
-	private ChatServerThread clients[] = new ChatServerThread[50];
+	public static final int MAX_CLIENTS = 50;
+	public static final String BYE_MESSAGE = ".bye";
+	
+	private ChatServerThread clients[] = new ChatServerThread[MAX_CLIENTS];
 	private ServerSocket server = null;
 	private Thread thread = null;
 	private int clientCount = 0;
@@ -54,8 +57,8 @@ public class ChatServer implements Runnable {
 	}
 
 	public synchronized void handle(int ID, String input) {
-		if (input.equals(".bye")) {
-			clients[findClient(ID)].send(".bye");
+		if (input.equals(BYE_MESSAGE)) {
+			clients[findClient(ID)].send(BYE_MESSAGE);
 			remove(ID);
 		} else
 			for (int i = 0; i < clientCount; i++)
