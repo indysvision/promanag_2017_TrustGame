@@ -9,6 +9,7 @@ public class ChatServerThread extends Thread {
 	private int ID = -1;
 	private DataInputStream streamIn = null;
 	private DataOutputStream streamOut = null;
+	private String clientName;
 
 	public ChatServerThread(ChatServer _server, Socket _socket) {
 		super();
@@ -36,7 +37,10 @@ public class ChatServerThread extends Thread {
 		System.out.println("Server Thread " + ID + " running.");
 		while (true) {
 			try {
-				server.handle(ID, streamIn.readUTF());
+				String textulPrimit = streamIn.readUTF();
+				if(clientName == null)
+					clientName = textulPrimit.split(":")[0];
+				server.handle(ID, textulPrimit);
 			} catch (IOException ioe) {
 				System.out.println(ID + " ERROR reading: " + ioe.getMessage());
 				server.remove(ID);

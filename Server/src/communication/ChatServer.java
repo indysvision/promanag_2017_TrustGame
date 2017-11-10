@@ -62,7 +62,7 @@ public class ChatServer implements Runnable {
 			remove(ID);
 		} else
 			for (int i = 0; i < clientCount; i++)
-				clients[i].send(ID + ": " + input);
+				clients[i].send(input);
 	}
 
 	public synchronized void remove(int ID) {

@@ -1,16 +1,27 @@
 package communication;
 
 import java.net.*;
+import java.util.Scanner;
+
+import javax.print.DocFlavor.BYTE_ARRAY;
+
 import java.io.*;
 
 public class ChatClient implements Runnable {
+	public static final String BYE_MESSAGE = ".bye";
+	
 	private Socket socket = null;
 	private Thread thread = null;
 	private DataInputStream console = null;
 	private DataOutputStream streamOut = null;
 	private ChatClientThread client = null;
-
+	private String clientName;
+	
 	public ChatClient(String serverName, int serverPort) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("What's ur name?");
+		clientName = sc.nextLine();
+		
 		System.out.println("Establishing connection. Please wait ...");
 		try {
 			socket = new Socket(serverName, serverPort);
@@ -26,7 +37,12 @@ public class ChatClient implements Runnable {
 	public void run() {
 		while (thread != null) {
 			try {
-				streamOut.writeUTF(console.readLine());
+				String userInput = console.readLine();
+				
+				streamOut.writeUTF( userInput.equals(BYE_MESSAGE) ?
+						BYE_MESSAGE : clientName + ": " + userInput);
+
+				streamOut.writeUTF( clientName + ": " + userInput);
 				streamOut.flush();
 			} catch (IOException ioe) {
 				System.out.println("Sending error: " + ioe.getMessage());
@@ -36,7 +52,7 @@ public class ChatClient implements Runnable {
 	}
 
 	public void handle(String msg) {
-		if (msg.equals(".bye")) {
+		if (msg.equals(BYE_MESSAGE)) {
 			System.out.println("Good bye. Press RETURN to exit ...");
 			stop();
 		} else
