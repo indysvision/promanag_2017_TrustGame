@@ -1,18 +1,22 @@
 package communication;
 
 import java.net.*;
+import game.GameEngine;
 import java.io.*;
 
 public class ChatServer implements Runnable {
-	public static final int MAX_CLIENTS = 50;
+	public static final int MAX_CLIENTS = 4;
 	public static final String BYE_MESSAGE = ".bye";
 	
 	private ChatServerThread clients[] = new ChatServerThread[MAX_CLIENTS];
 	private ServerSocket server = null;
 	private Thread thread = null;
 	private int clientCount = 0;
-
-	public ChatServer(int port) {
+	
+	private GameEngine gameEngine;
+	
+	public ChatServer(int port, GameEngine engineul) {
+		this.gameEngine = engineul;
 		try {
 			System.out.println("Binding to port " + port + ", please wait  ...");
 			server = new ServerSocket(port);
@@ -96,6 +100,10 @@ public class ChatServer implements Runnable {
 			}
 		} else
 			System.out.println("Client refused: maximum " + clients.length + " reached.");
+		
+		if (clientCount == MAX_CLIENTS) {
+			gameEngine.onPlayersReady(clients);
+		}
 	}
 
 }
