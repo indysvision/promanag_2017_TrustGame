@@ -1,5 +1,6 @@
 package game.managers;
 
+import game.pojo.Game;
 import game.pojo.Round;
 import game.pojo.Tournament;
 
@@ -9,16 +10,16 @@ public class TournamentManager {
 	
 	
 	
-	private Round [] getFirstTwoGames() {
-		return new Round[2];	
+	private Game [] getFirstTwoGames() {
+		return new Game[2];	
 	}
 	
-	private Round [] getSecondTwoGames() {
-		return new Round[2];
+	private Game [] getSecondTwoGames() {
+		return new Game[2];	
 	}
 	
-	private Round [] getThirdTwoGames() {
-		return new Round[2];
+	private Game [] getThirdTwoGames() {
+		return new Game[2];	
 	}
 	
 	public TournamentManager(PlayerManager[] playersManager) {
